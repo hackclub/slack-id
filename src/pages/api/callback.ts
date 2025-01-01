@@ -11,7 +11,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     // Parse the state to retreive the workspace ID
     const decodedState = JSON.parse(atob(state as string));
-    const { redirect_uri, app } = decodedState;
+    const { redirect_uri, app, queryParams } = decodedState;
 
     // Exchange authorization code for access token
     const result = await axios({
@@ -42,6 +42,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     const params = {
       slack_id: id,
+      ...queryParams
     }
 
     const url = (apps as any)[app] + "?" + new URLSearchParams(params).toString();
