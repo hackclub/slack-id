@@ -12,10 +12,12 @@ const nextConfig = {
       {
         source: '/callback',
         destination: '/api/callback',
+        permanent: false,
       },
       {
         source: '/id',
         destination: '/api/auth',
+        permanent: false,
       }
     ]
   }
