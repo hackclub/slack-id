@@ -16,7 +16,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     const state = {
       redirect_uri: REDIRECT_URI,
-      app: "scrapyard-email-form",
+      app
     };
 
     // Encode the state
