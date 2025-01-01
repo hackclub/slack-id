@@ -2,7 +2,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 import apps from "../../../applications.json";
-import jwt from "jsonwebtoken";
 
 const SLACK_ACCESS_TOKEN_URL = "https://slack.com/api/oauth.v2.access";
 
