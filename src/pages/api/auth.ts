@@ -11,7 +11,7 @@ const SLACK_SCOPES = ["identify"];
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { app } = req.query;
-    const REDIRECT_URI = "https://localhost:3000" + "/api/callback";
+    const REDIRECT_URI = "https://slack-id.hackclub.com" + "/callback";
 
     const state = {
       redirect_uri: REDIRECT_URI,
