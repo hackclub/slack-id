@@ -1,6 +1,8 @@
 /* eslint-disable import/no-anonymous-default-export */
 import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
+import apps from "../../../applications.json";
+import jwt from "jsonwebtoken";
 
 const SLACK_ACCESS_TOKEN_URL = "https://slack.com/api/oauth.v2.access";
 
@@ -28,6 +30,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       },
     });
 
+    const id = result.data.authed_user.id;
+
+    console.log({ data: result.data.authed_user.id });
+
     // Get the access token from the response
     const data = result.data;
     const { access_token } = data;
@@ -35,9 +41,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     // Save the access token to the database
     console.log("Access token: ", access_token);
 
-    res.status(200).json({
-      message: "Slack access token saved",
-    });
+    const params = {
+      slack_id: id,
+    }
+
+    const url = (apps as any)[decodedState] + "?" + new URLSearchParams(params).toString();
+
+    res.redirect(url);
   } catch (err) {
     res.status(500).json({ message: (err as Error).message });
   }
