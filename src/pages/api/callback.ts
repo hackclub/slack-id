@@ -2,6 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 import apps from "../../../applications.json";
+import jwt from "jsonwebtoken";
 
 const SLACK_ACCESS_TOKEN_URL = "https://slack.com/api/oauth.v2.access";
 
@@ -42,6 +43,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     const params = {
       slack_id: id,
+      verifier: jwt.sign({ slack_id: id }, process.env.PRIVATE_KEY as string, { algorithm: "RS256" }),
       ...queryParams
     }
 
