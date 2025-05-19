@@ -11,22 +11,21 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const decodedState = JSON.parse(atob(state as string));
     const { redirect_uri, app, queryParams } = decodedState;
 
+    const body = new FormData();
+    body.append("code", code as string);
+    body.append("client_id", process.env.NEXT_PUBLIC_SLACK_CLIENT_ID as string);
+    body.append("client_secret", process.env.SLACK_CLIENT_SECRET as string);
+    body.append("grant_type", "authorization_code");
+    body.append("redirect_uri", redirect_uri as string);
+
     // Exchange authorization code for access token
     const result = await fetch(SLACK_ACCESS_TOKEN_URL, {
       method: "POST",
-      body: JSON.stringify({
-        code,
-        client_id: process.env.NEXT_PUBLIC_SLACK_CLIENT_ID,
-        client_secret: process.env.SLACK_CLIENT_SECRET,
-        grant_type: "authorization_code",
-        redirect_uri,
-      }),
+      body,
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
       }
     }).then(res => res.json())
-
-    console.log(result);
 
     const id = result.authed_user.id;
 
