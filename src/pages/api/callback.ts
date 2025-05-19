@@ -22,9 +22,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         redirect_uri,
       }),
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "application/json",
       }
     }).then(res => res.json())
+
+    console.log(result);
 
     const id = result.authed_user.id;
 
