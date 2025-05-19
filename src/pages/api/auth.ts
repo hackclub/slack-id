@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import apps from "../../../applications.json";
 
 
 const SLACK_OAUTH_BASE_URL = "https://slack.com/oauth/v2/authorize";
@@ -8,12 +7,12 @@ const SLACK_SCOPES = ["identify"];
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { app, ...queryParams } = req.query;
+    const { return_to, ...queryParams } = req.query;
     const REDIRECT_URI = "https://slack-id.hackclub.com" + "/callback";
 
     const state = {
       redirect_uri: REDIRECT_URI,
-      app,
+      return_to,
       queryParams
     };
 

@@ -12,7 +12,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     // Parse the state to retreive the workspace ID
     const decodedState = JSON.parse(atob(state as string));
-    const { redirect_uri, app, queryParams } = decodedState;
+    const { redirect_uri, return_to, queryParams } = decodedState;
 
     // Exchange authorization code for access token
     const result = await axios({
@@ -47,7 +47,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       ...queryParams
     }
 
-    const url = (apps as any)[app] + "?" + new URLSearchParams(params).toString();
+    const url = return_to + "?" + new URLSearchParams(params).toString();
 
     res.redirect(url);
   } catch (err) {
