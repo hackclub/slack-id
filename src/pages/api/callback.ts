@@ -1,6 +1,4 @@
-/* eslint-disable import/no-anonymous-default-export */
 import type { NextApiRequest, NextApiResponse } from "next";
-import axios from "axios";
 import apps from "../../../applications.json";
 
 const SLACK_ACCESS_TOKEN_URL = "https://slack.com/api/oauth.v2.access";
@@ -14,28 +12,26 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const { redirect_uri, app, queryParams } = decodedState;
 
     // Exchange authorization code for access token
-    const result = await axios({
-      method: "post",
-      url: SLACK_ACCESS_TOKEN_URL,
-      data: {
+    const result = await fetch(SLACK_ACCESS_TOKEN_URL, {
+      method: "POST",
+      body: JSON.stringify({
         code,
         client_id: process.env.NEXT_PUBLIC_SLACK_CLIENT_ID,
         client_secret: process.env.SLACK_CLIENT_SECRET,
         grant_type: "authorization_code",
         redirect_uri,
-      },
+      }),
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-      },
-    });
+      }
+    }).then(res => res.json())
 
-    const id = result.data.authed_user.id;
+    const id = result.authed_user.id;
 
-    console.log({ data: result.data.authed_user.id });
+    console.log({ data: result.authed_user.id });
 
     // Get the access token from the response
-    const data = result.data;
-    const { access_token } = data;
+    const { access_token } = result;
 
     // Save the access token to the database
     console.log("Access token: ", access_token);

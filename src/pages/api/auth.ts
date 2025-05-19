@@ -1,6 +1,4 @@
-/* eslint-disable import/no-anonymous-default-export */
 import type { NextApiRequest, NextApiResponse } from "next";
-import axios from "axios";
 import apps from "../../../applications.json";
 
 
