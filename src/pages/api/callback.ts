@@ -43,7 +43,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     const params = {
       slack_id: id,
-      verifier: jwt.sign({ slack_id: id }, process.env.PRIVATE_KEY as string, { algorithm: "RS256" }),
+      verifier: jwt.sign({ slack_id: id }, process.env.PRIVATE_KEY as string, { algorithm: "RS256", expiresIn: 60 * 10 }),
       ...queryParams
     }
 
