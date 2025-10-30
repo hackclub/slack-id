@@ -1,6 +1,6 @@
 # Automatic Slack ID
 
-Stop asking people for Slack IDs! Send someone to `https://slack-id.hackclub.com/?return_to=<URL>` and they'll be redirected to your form with their Slack ID prefilled.
+Stop asking people for Slack IDs! Send someone to `https://slack-id.hackclub.com/id?return_to=<URL>` and they'll be redirected to your form with their Slack ID prefilled.
 
 ## Public Key
 
